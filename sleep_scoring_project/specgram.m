@@ -9,7 +9,7 @@
 %% Path information    
 % number = input('subjectnum =','s');
 % subjectID = ['osceeg',number];
-        subjectID = 'osceeg15b';
+        subjectID = 'osceeg17b';
 % runnum = input('run=','s');
 % run = ['run',runnum];
         run = 'run01';
@@ -47,10 +47,8 @@ title(eegtitle)
 
 %% Click times, plotting
 figure()
-% ax1 = subplot(2,1,1);
+ax1 = subplot(2,1,1);
 plotclicktimes(subjectID,run)
-% set(gca,'XLim',[min max],'YLim',[.9 1.1])          %Change the axis
-%                                                       limits, how is tbd
 
 %% Plot the respiratory info
 % load(resppath)
@@ -66,45 +64,31 @@ plotclicktimes(subjectID,run)
 % title('Resp Times');
 % xlabel('sec');
 % % set(gca,'XLim',[min1 max1],'YLim',[.9 1.1]);
-% 
-%% Arousal period??
 
-clickinterval=diff(clicktimes);  %finds the difference between clicks; finds the delays 
-    [sleepTime, arous] = max(clickinterval); %finding the max delay between clicks
-    arousTime = clicktimes(arous+1);  %the time that corresponds to the max
-    %ask bev why, I'm a little confused of its purpose?
-startTime = arousTime - 50;
-endTime = arousTime + 50;
-
-%% extracting arousal period
-arousTimeInd = find((timeEEG > startTime) & (timeEEG < endTime));
-arousTimeEEG = timeEEG(arousTimeInd);
-arousEEG = EEG(arousTimeInd);
-
-%% EEG spectrogram of behavior arousal moment
+%% EEG spectrogram of run
 dt = timeEEG(2)-timeEEG(1);
 params=struct;
 params.tapers=[10 19]; % [TW K] TK= time-bandwidth = sampling frequency*spectral width, K = 2*TW - 1
 params.Fs=1/dt; % Set sampling rate here
 params.fpass=[0 25]; % Set frequency range here
 movingwin=[10 2]; % [windowlength windowslide]
-[spec, t, f] = mtspecgramc_detrend_laura(arousEEG,movingwin,params);
+[spec, t, f] = mtspecgramc_detrend_laura(EEG,movingwin,params);
 
 %% Plotting specgram details
 
-figure();
-% ax2 = subplot(2,1,2);
-imagesc(arousTimeEEG,f,log10(spec')) %10*log10(S2)'
+% figure();
+ax2 = subplot(2,1,2);
+imagesc(timeEEG,f,log10(spec')) %10*log10(S2)'
 set(gca,'YDir','normal')
 colormap('jet')
 xlabel('time')
 ylabel('Frequency')
 title('EEG Spectrogram')
 
-% axisSpec = ax2.XLim;
-% linkaxes([ax2,ax1],'x');
-% 
-% ax2.XLim=axisSpec;
+axisSpec = ax2.XLim;
+linkaxes([ax2,ax1],'x');
+
+ax2.XLim=axisSpec;
 
 %% Plotting Alpha
 dt = timeEEG(2)-timeEEG(1);
@@ -113,16 +97,16 @@ params.tapers=[4 7]; % [TW K] TK= time-bandwidth = sampling frequency*spectral w
 params.Fs=1/dt; % Set sampling rate here
 params.fpass=[8 12]; % Set frequency range here
 movingwin = [10 2]; % [windowlength windowslide]
-[spec, t, f] = mtspecgramc_detrend_laura(arousEEG,movingwin,params);
+[spec, t, f] = mtspecgramc_detrend_laura(EEG,movingwin,params);
 
 figure()
-imagesc(arousTimeEEG,f,log10(spec')) %10*log10(S2)'
+imagesc(timeEEG,f,log10(spec')) %10*log10(S2)'
 set(gca,'YDir','normal')
 colormap('jet')
 xlabel('time')
 ylabel('Frequency')
 title('EEG Spectrogram Alpha')
-caxis([-1.2 0.05])
+% caxis([-1.2 0.05])
 
 %% Plotting Delta
 dt = timeEEG(2)-timeEEG(1);
@@ -131,13 +115,13 @@ params.tapers=[10 19]; % [TW K] TK= time-bandwidth = sampling frequency*spectral
 params.Fs=1/dt; % Set sampling rate here
 params.fpass=[0 4]; % Set frequency range here
 movingwin=[20 2]; % [windowlength windowslide]
-[spec, t, f] = mtspecgramc_detrend_laura(arousEEG,movingwin,params);
+[spec, t, f] = mtspecgramc_detrend_laura(EEG,movingwin,params);
 
 figure()
-imagesc(arousTimeEEG,f,log10(spec')) %10*log10(S2)'
+imagesc(timeEEG,f,log10(spec')) %10*log10(S2)'
 set(gca,'YDir','normal')
 colormap('jet')
 xlabel('time')
 ylabel('Frequency')
 title('EEG Spectrogram Delta')
-caxis([-.5 1])
+% caxis([-.5 1])
