@@ -46,8 +46,8 @@ plot(timeEEG,EEG125,'b')
 title('EEG Channel 125')
 
 ax2 = subplot(2,1,2);
-plot(timeEEG,-1*ECG,'r')
-title('ECG')
+plot(timeEEG,-1*ECG,'r')            %multiply the ECG by -1 to flip it for easier reading
+title('ECG')                        % of the R wave and R interval
 
 %Plots data in one figure but two different axis
 figure()
