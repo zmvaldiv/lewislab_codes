@@ -1,4 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Heart Brain Interaction EEG Artifact
 % By: Zenia
 % Description: Identifies the BCG artifact in EEG data and then finds the
@@ -56,7 +56,7 @@ plot(timeEEG,EEG126,'b')
 title('EEG Channel 126')
 
 ax4 = subplot(2,1,2);
-plot(timeEEG,ECG,'r')
+plot(timeEEG,-1*ECG,'r')
 title('ECG')
 
 linkaxes([ax1,ax2],'x');
