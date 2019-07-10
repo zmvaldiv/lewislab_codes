@@ -1,7 +1,7 @@
 %Trying to figure out how to ID the BCG artifact with find peaks
 figure()
 findpeaks(-1*ECG,'MinPeakHeight',1e3,'MinPeakDistance',150);
-
+%Use ECG peaks to find the EEG BCG artifact  
 
 
 t = timeEEG;                                             % Time Vector
