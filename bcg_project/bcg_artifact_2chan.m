@@ -16,51 +16,37 @@
 
 mainpath = ['/Volumes/Research/eng_research_lewislab/data/osceeg_frommgh/',subjectID];
 channelpath = [mainpath,'/eeg/fs200_averef/', run]; 
-hdrpath = [mainpath,'/eeg/fs200_averef/', run, '/hdr'];
-ecgpath = [mainpath,'/eeg/fs200_averef/', run, '/ecg'];
 
 % channelpath = [mainpath,'/eeg/fs200/', run]; 
-% hdrpath = [mainpath,'/eeg/fs200/', run, '/hdr'];
-% ecgpath = [mainpath,'/eeg/fs200/', run, '/ecg'];
-
-
 
 %% Load EEG data
 
-load(ecgpath)
-ECG = ch;
+rawECG = loadchan(channelpath,'ecg');
+ECG = -1*rawECG;    %multiply the ECG by -1 to flip it for easier reading of the R wave and R interval
 
-load([channelpath,'/c125']);
-EEG125 = ch;
-load([channelpath,'/c126']);
-EEG126 = ch;
+EEG125 = loadchan(channelpath,125);    %channel type is bcg
+EEG126 = loadchan(channelpath,126);    %channel type is eeg
+EEG31 = loadchan(channelpath,31);      %channel type is eeg
+EEG26 = loadchan(channelpath,26);      %channel type is bcg
+EEG241 = loadchan(channelpath,241);    %channel type is cheek
+EEG238 = loadchan(channelpath,238);    %channel type is cheek
 
-load(hdrpath);
+hdr = loadchan(channelpath,'hdr');
 timeEEG = hdr.ts;
 
 %% Plot EEG and ECG data
 %Plots data in one figure but two different axis
-figure()
-ax1 = subplot(2,1,1);
-plot(timeEEG,EEG125,'b')
-title('EEG Channel 125')
+ecgcomboplot(ECG,EEG125,125,timeEEG);
 
-ax2 = subplot(2,1,2);
-plot(timeEEG,-1*ECG,'r')            %multiply the ECG by -1 to flip it for easier reading
-title('ECG')                        % of the R wave and R interval
+ecgcomboplot(ECG,EEG126,126,timeEEG);
 
-%Plots data in one figure but two different axis
-figure()
-ax3 = subplot(2,1,1);
-plot(timeEEG,EEG126,'b')
-title('EEG Channel 126')
+ecgcomboplot(ECG,EEG31,31,timeEEG);
 
-ax4 = subplot(2,1,2);
-plot(timeEEG,-1*ECG,'r')
-title('ECG')
+ecgcomboplot(ECG,EEG26,26,timeEEG);
 
-linkaxes([ax1,ax2],'x');
-linkaxes([ax3,ax4],'x');
+ecgcomboplot(ECG,EEG241,241,timeEEG);
+
+ecgcomboplot(ECG,EEG238,238,timeEEG);
 
 
 
