@@ -6,6 +6,12 @@ if ischar(channel)>0
 else
     channel = num2str(channel);
     data = load([path,'/c',channel]);
+end
+
+if isfield(data,'ch')>0
+    EEGdata = data.ch;
+elseif isfield(data,'hdr')>0
+    EEGdata = data.hdr;
 end 
-EEGdata = data.ch;
+
 end 
