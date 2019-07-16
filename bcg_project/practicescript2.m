@@ -32,19 +32,54 @@ title('EEG with BCG Artifact Marked');
 
 rpeaks = loadchan(channelpath,'rpeaks');  
 rpks = ones(size(rpeaks));
+yval = rpks*2000;
 for i=1:length(rpeaks)
-    rpks(i) = rpeaks(i).latency;
+    rpks(i) = rpeaks(i).latency/200;
 end
-
-fs200 = rpks/200;
-numone=ones(size(rpks));
 
 plot(timeEEG,ECG,'r')            
 hold on
-scatter(fs200,numone*2000)
+scatter(rpks,yval)
 hold off
 
 %plotted and its the rpeaks in the ecg so the entire first section of this
 %script? useless 
 
+%% Check if rpeaks file exists
+
+% subID = num2str(8);
+% run = num2str(1);
+% firstpath = ['/Volumes/Research/eng_research_lewislab/data/osceeg_frommgh/osceeg',subID,'b'];
+% secondpath = ['/eeg/fs200_averef/run0', run]; 
+% 
+% folder = [firstpath,secondpath];
+subjectsB = [2:10,15,17,19,20,21,22,24];
+j = 1;
+for i=subjectsB
+    subID = num2str(i);
+    
+    firstpath = ['/Volumes/Research/eng_research_lewislab/data/osceeg_frommgh/osceeg',subID,'b'];
+    secondpath = '/eeg/fs200_averef/run01'; 
+    folder = [firstpath,secondpath,'/rpeaks.mat'];
+    present = exist(folder);
+    
+    
+    if present>0
+        pks_existrun1(j) = str2num(subID);
+        value(j) = present;
+        j = j+1;
+    end
+end
+
+%% save the subjects id that have the rpeaks file
+rpksexist.run01 = [2,3,5,6,7,8,9,10];
+rpksexist.run02 = [2,3,5,6,7,8,9,10];
+rpksexist.run03 = [3,6,7,9,10];
+ %just for reference, these are the possible subjects & runs that have the
+ % rpeaks file 
+
+
+
+%%
+%NEXT SECTION 
 
