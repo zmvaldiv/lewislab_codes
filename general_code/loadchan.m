@@ -12,6 +12,8 @@ if isfield(data,'ch')>0
     EEGdata = data.ch;
 elseif isfield(data,'hdr')>0
     EEGdata = data.hdr;
+elseif isfield(data,'rpeaks')>0
+    EEGdata = data.rpeaks;
 end 
 
 end 
