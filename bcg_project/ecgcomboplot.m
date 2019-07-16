@@ -1,11 +1,7 @@
 %Plots the EEG data with the ECG data in the same figure, but different
 %axis
-function ecgcomboplot(ECGdata,EEGdata,channum,timeEEG,rpeaks)
-rpks = ones(size(rpeaks));
-yval = rpks*2000;
-for i=1:length(rpeaks)
-    rpks(i) = rpeaks(i).latency/200;
-end
+function ecgcomboplot(ECGdata,EEGdata,channum,timeEEG,rpks)
+yval = ones(size(rpks))*2000;
 
 
 figure()
