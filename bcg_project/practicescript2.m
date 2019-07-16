@@ -24,3 +24,27 @@ plot(t(adjlocs), pks, 'vr','MarkerFaceColor','r')
 hold off
 grid
 title('EEG with BCG Artifact Marked');
+
+
+%% Rpeaks data ???
+% Just found a file rpeaks.mat in the path for 8b, run01 and like what the
+% heck !! Plotting below to see what it is 
+
+rpeaks = loadchan(channelpath,'rpeaks');  
+rpks = ones(size(rpeaks));
+for i=1:length(rpeaks)
+    rpks(i) = rpeaks(i).latency;
+end
+
+fs200 = rpks/200;
+numone=ones(size(rpks));
+
+plot(timeEEG,ECG,'r')            
+hold on
+scatter(fs200,numone*2000)
+hold off
+
+%plotted and its the rpeaks in the ecg so the entire first section of this
+%script? useless 
+
+
