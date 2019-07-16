@@ -34,21 +34,26 @@ EEG238 = loadchan(channelpath,238);    %channel type is cheek
 hdr = loadchan(channelpath,'hdr');
 timeEEG = hdr.ts;
 
+rpeaks = loadchan(channelpath,'rpeaks');  
+for i=1:length(rpeaks)
+    rpks(i) = rpeaks(i).latency/200;
+end
+
+
 %% Plot EEG and ECG data
 %Plots data in one figure but two different axis
-ecgcomboplot(ECG,EEG125,125,timeEEG);
+ecgcomboplot(ECG,EEG125,125,timeEEG,rpks);
 
-ecgcomboplot(ECG,EEG126,126,timeEEG);
+ecgcomboplot(ECG,EEG126,126,timeEEG,rpks);
 
-ecgcomboplot(ECG,EEG31,31,timeEEG);
+ecgcomboplot(ECG,EEG31,31,timeEEG,rpks);
 
-ecgcomboplot(ECG,EEG26,26,timeEEG);
+ecgcomboplot(ECG,EEG26,26,timeEEG,rpks);
 
-ecgcomboplot(ECG,EEG241,241,timeEEG);
+ecgcomboplot(ECG,EEG241,241,timeEEG,rpks);
 
-ecgcomboplot(ECG,EEG238,238,timeEEG);
+ecgcomboplot(ECG,EEG238,238,timeEEG,rpks);
 
-
-
+%% Finding the BCG artifact
 
 
