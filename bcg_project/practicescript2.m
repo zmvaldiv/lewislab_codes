@@ -94,3 +94,12 @@ end
 %     idx{i} = find((timeEEG >= t_int{i}(1)) & (timeEEG <= t_int{i}(2)));
 % end
 
+[pks,locs] = findpeaks(EEG125(idx{2162}),'MinPeakHeight',20);
+adjlocs = locs + idx{2162}(1)-1;                               % Adjust ?locs? To Correct For Offset
+figure()
+plot(timeEEG, EEG125)
+hold on
+plot(timeEEG(adjlocs), pks, 'vr','MarkerFaceColor','r')
+hold off
+grid
+title('EEG with BCG Artifact Marked');
