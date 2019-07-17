@@ -101,7 +101,9 @@ end
     figure()
     plot(timeEEG, EEG125)
     hold on
-    plot(timeEEG(adjlocs{751}), pks{751}, 'vr','MarkerFaceColor','r')
+    for i=1:length(rpks)
+        plot(timeEEG(adjlocs{i}), pks{i}, 'vr','MarkerFaceColor','r')
+    end
     hold off
     grid
     title('EEG with BCG Artifact Marked');
