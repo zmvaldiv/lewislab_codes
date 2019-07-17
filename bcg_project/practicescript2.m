@@ -97,13 +97,15 @@ for i=1:length(rpks)
     [pks{i},locs{i}] = findpeaks(EEG125(idx{i}));
     adjlocs{i} = locs{i} + idx{i}(1)-1;                               % Adjust ?locs? To Correct For Offset
 end 
-   %% 
-    figure()
-    plot(timeEEG, EEG125)
-    hold on
-    for i=1:length(rpks)
-        plot(timeEEG(adjlocs{i}), pks{i}, 'vr','MarkerFaceColor','r')
-    end
-    hold off
-    grid
-    title('EEG with BCG Artifact Marked');
+%% 
+yval = ones(size(rpks))*30;
+figure()
+plot(timeEEG, EEG125)
+hold on
+for i=1:length(rpks)
+    plot(timeEEG(adjlocs{i}), pks{i}, 'vr','MarkerFaceColor','r')
+end
+scatter(rpks,yval)
+hold off
+grid
+title('EEG with BCG Artifact Marked');
