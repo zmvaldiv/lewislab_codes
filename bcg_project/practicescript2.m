@@ -80,6 +80,17 @@ rpksexist.run03 = [3,6,7,9,10];
 
 
 
+%% creating the time intervals
+%t_int{i}=[start,end];
+
+for i = 1:length(rpks)
+    t_int{i}=[rpks(i),rpks(i)+.3];
+    idx{i} = find((timeEEG >= t_int{i}(1)) & (timeEEG <= t_int{i}(2)));
+end
+
 %%
-%NEXT SECTION 
+% 
+% for i = 1:length(rpks)
+%     idx{i} = find((timeEEG >= t_int{i}(1)) & (timeEEG <= t_int{i}(2)));
+% end
 
