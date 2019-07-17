@@ -33,16 +33,16 @@ EEG238 = loadchan(channelpath,238);    %channel type is cheek
 
 hdr = loadchan(channelpath,'hdr');
 timeEEG = hdr.ts;
-
+ 
 rpeaks = loadchan(channelpath,'rpeaks');  
 for i=1:length(rpeaks)
     rpks(i) = rpeaks(i).latency/200;
 end
 
+rpks = rpks(1:length(rpks)-1);
 
 %% Plot EEG and ECG data
 %Plots data in one figure but two different axis
-ecgcomboplot(ECG,EEG125,125,timeEEG,rpks);
 
 ecgcomboplot(ECG,EEG126,126,timeEEG,rpks);
 
