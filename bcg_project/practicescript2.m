@@ -84,8 +84,10 @@ rpksexist.run03 = [3,6,7,9,10];
 %t_int{i}=[start,end];
 
 for i = 1:length(rpks)
-    t_int{i}=[rpks(i),rpks(i)+.3];
+    t_int{i}=[rpks(i),rpks(i)+.2];
     idx{i} = find((timeEEG >= t_int{i}(1)) & (timeEEG <= t_int{i}(2)));
+    [pks{i},locs{i}] = findpeaks(EEGdata.c125(idx{i}));
+    adjlocs{i} = locs{i} + idx{i}(1)-1;
 end
 
 %%
@@ -94,13 +96,14 @@ end
 %     idx{i} = find((timeEEG >= t_int{i}(1)) & (timeEEG <= t_int{i}(2)));
 % end
 for i=1:length(rpks)
-    [pks{i},locs{i}] = findpeaks(EEG125(idx{i}));
-    adjlocs{i} = locs{i} + idx{i}(1)-1;                               % Adjust ?locs? To Correct For Offset
+    [pks_126{i},locs_126{i}] = findpeaks(EEGdata.c126(idx{i}));
+    adjlocs_126{i} = locs_126{i} + idx{i}(1)-1;                               % Adjust ?locs? To Correct For Offset
 end 
-%% 
+
+%%
 yval = ones(size(rpks))*30;
-figure()
-plot(timeEEG, EEG125)
+figure();
+plot(timeEEG, EEGdata.c125)
 hold on
 for i=1:length(rpks)
     plot(timeEEG(adjlocs{i}), pks{i}, 'vr','MarkerFaceColor','r')
@@ -108,4 +111,25 @@ end
 scatter(rpks,yval)
 hold off
 grid
-title('EEG with BCG Artifact Marked');
+title('EEG125 with BCG Artifact Marked');
+%% 
+yval = ones(size(rpks))*30;
+plot(timeEEG, EEGdata.c126)
+hold on
+for i=1:length(rpks)
+    plot(timeEEG(adjlocs_126{i}), pks_126{i}, 'vr','MarkerFaceColor','r')
+end
+scatter(rpks,yval)
+hold off
+grid
+title('EEG126 with BCG Artifact Marked');
+
+%%
+EEGdata=struct;
+EEGdata.c125=EEG125;
+EEGdata.c126=EEG126;
+EEGdata.c238=EEG238;
+EEGdata.c241=EEG241;
+EEGdata.c26=EEG26;
+EEGdata.c31=EEG31;
+%%
