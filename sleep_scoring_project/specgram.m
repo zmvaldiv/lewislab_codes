@@ -51,19 +51,14 @@ ax1 = subplot(2,1,1);
 plotclicktimes(subjectID,run)
 
 %% Plot the respiratory info
-% load(resppath)
-% resp = ch;
-% 
-% figure()
-% Y1 = ones(size(resp)) - .01;
-% X1 = resp;
-% scatter(X1,Y1,'Marker','*');
-% 
-% min1 = X1(1)- 50;
-% max1 = X1(length(X1))+ 50;
-% title('Resp Times');
-% xlabel('sec');
-% % set(gca,'XLim',[min1 max1],'YLim',[.9 1.1]);
+load(resppath)
+resp = ch;
+
+figure()
+plot(timeEEG,resp)
+title('Respiratory');
+xlabel('sec');
+
 
 %% EEG spectrogram of run
 dt = timeEEG(2)-timeEEG(1);
