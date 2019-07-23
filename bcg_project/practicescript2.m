@@ -72,9 +72,9 @@ for i=subjectsB
 end
 
 %% save the subjects id that have the rpeaks file
-rpksexist.run01 = [2,3,5,6,7,8,9,10];
-rpksexist.run02 = [2,3,5,6,7,8,9,10];
-rpksexist.run03 = [3,6,7,9,10];
+rpks_exist.run01 = [2,3,5,6,7,8,9,10];
+rpks_exist.run02 = [2,3,5,6,7,8,9,10];
+rpks_exist.run03 = [3,6,7,9,10];
  %just for reference, these are the possible subjects & runs that have the
  % rpeaks file 
 
@@ -86,7 +86,7 @@ rpksexist.run03 = [3,6,7,9,10];
 for i = 1:length(rpks)
     t_int{i}=[rpks(i),rpks(i)+.2];
     idx{i} = find((timeEEG >= t_int{i}(1)) & (timeEEG <= t_int{i}(2)));
-    [pks{i},locs{i}] = findpeaks(EEGdata.c125(idx{i}));
+    [pks{i},locs{i}] = findpeaks(EEGdata.c31(idx{i}));
     adjlocs{i} = locs{i} + idx{i}(1)-1;
 end
 
@@ -96,8 +96,8 @@ end
 %     idx{i} = find((timeEEG >= t_int{i}(1)) & (timeEEG <= t_int{i}(2)));
 % end
 for i=1:length(rpks)
-    [pks_126{i},locs_126{i}] = findpeaks(EEGdata.c126(idx{i}));
-    adjlocs_126{i} = locs_126{i} + idx{i}(1)-1;                               % Adjust ?locs? To Correct For Offset
+    [pks_238{i},locs_238{i}] = findpeaks(EEGdata.c238(idx{i}));
+    adjlocs_238{i} = locs_238{i} + idx{i}(1)-1;                               % Adjust ?locs? To Correct For Offset
 end 
 
 %%
@@ -114,15 +114,15 @@ grid
 title('EEG125 with BCG Artifact Marked');
 %% 
 yval = ones(size(rpks))*30;
-plot(timeEEG, EEGdata.c126)
+plot(timeEEG, EEGdata.c238)
 hold on
 for i=1:length(rpks)
-    plot(timeEEG(adjlocs_126{i}), pks_126{i}, 'vr','MarkerFaceColor','r')
+    plot(timeEEG(adjlocs_238{i}), pks_238{i}, 'vr','MarkerFaceColor','r')
 end
 scatter(rpks,yval)
 hold off
 grid
-title('EEG126 with BCG Artifact Marked');
+title('EEG238 with BCG Artifact Marked');
 
 %%
 EEGdata=struct;
