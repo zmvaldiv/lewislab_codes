@@ -44,12 +44,6 @@ figure()
 plot(timeEEG,EEG,'b')
 title(eegtitle)
 
-
-%% Click times, plotting
-figure()
-ax1 = subplot(2,1,1);
-plotclicktimes(subjectID,run)
-
 %% Plot the respiratory info
 load(resppath)
 resp = ch;
@@ -58,6 +52,11 @@ figure()
 plot(timeEEG,resp)
 title('Respiratory');
 xlabel('sec');
+
+%% Click times, plotting
+figure()
+ax1 = subplot(2,1,1);
+plotclicktimes(subjectID,run)
 
 
 %% EEG spectrogram of run
